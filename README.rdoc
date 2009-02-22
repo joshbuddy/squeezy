@@ -1,0 +1,21 @@
+= Squeezy
+
+CSS and JS go in, compressed version go out, that's what Squeezy is all about.
+
+== Prerequisites
+
+You need a recent version of jruby installed.
+
+== Usage
+
+* CLASSPATH=ext/jargs-1.0.jar:ext/yuicompressor-2.4.2.jar jruby -rubygems app.rb /path/to/rails/public/dir
+* Redirect js/css requests from nginx (or whatever) to squeezy.
+* Watch JS/CSS get compressed!
+
+== Rationale
+
+I hate pre-compiling things. JS/CSS compression should be a product of your environment, not something you do before hand.
+
+== TODO
+
+Squeezy should handle conditional get/head requests correctly. It should cache the compressed results.
