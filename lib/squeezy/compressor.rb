@@ -1,25 +1,39 @@
-include_class('com.yahoo.platform.yui.compressor.JavaScriptCompressor')
-include_class('com.yahoo.platform.yui.compressor.CssCompressor')
+require 'digest/md5'
 
-def compress_css(css_contents)
-  contents = css_contents.dup
-  contents.gsub!(/(["'])(.*?)(\.jpg|\.png|\.gif)\1/) do |m|
-    mtime = File.exists?(File.join($config['rails_path'], "#{$~[2]}#{$~[3]}")) && File.mtime(File.join($config['rails_path'], "#{$~[2]}#{$~[3]}"))
-    "#{$~[1]}#{$~[2]}#{$~[3]}?#{mtime.to_i}#{$~[1]}"
+class Squeezy
+
+  include_class Java::com.yahoo.platform.yui.compressor.JavaScriptCompressor
+  include_class Java::com.yahoo.platform.yui.compressor.CssCompressor
+
+  def with_cached_file(file)
+    if File.exist?(file)
+      File.read(file)
+    else
+      contents = yield
+      File.open(file, 'w') {|f| f << contents}
+      contents
+    end
   end
-  CssCompressor.new(java.io.StringReader.new(contents)).compress(result = java.io.StringWriter.new(), -1)
-  result.to_s
-rescue Exception => e
-  $stderr.puts e
-  css_contents
-end
 
-def compress_js(js_contents)
-  contents = js_contents.dup
-  contents.each {|line| line.gsub!(/console\..*?[;\n]/,'') }
-  JavaScriptCompressor.new(java.io.StringReader.new(contents), Reporter.new).compress(result = java.io.StringWriter.new(), -1, false, false, false, false)
-  result.to_s
-rescue Exception => e
-  $stderr.puts e
-  js_contents
+  def compress_css(contents)
+    with_cached_file "/tmp/#{Digest::MD5.hexdigest(contents)}.css" do
+      CssCompressor.new(java.io.StringReader.new(contents)).compress(result = java.io.StringWriter.new(), -1)
+      result.to_s
+    end
+  rescue Exception => e
+    $stderr.puts e
+    $stderr.puts "Compression of CSS failed!"
+    contents
+  end
+
+  def compress_js(contents)
+    with_cached_file "/tmp/#{Digest::MD5.hexdigest(contents)}.js" do
+      JavaScriptCompressor.new(java.io.StringReader.new(contents), Reporter.new).compress(result = java.io.StringWriter.new(), -1, true, false, false, false)
+      result.to_s
+    end
+  rescue Exception => e
+    $stderr.puts e
+    $stderr.puts "Compression of JS failed!"
+    contents
+  end
 end
