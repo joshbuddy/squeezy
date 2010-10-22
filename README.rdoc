@@ -10,5 +10,5 @@ Must be run under jRuby.
 
 * <tt>gem install squeezy</tt>
 * <tt>squeezy</tt>
-* <tt>curl -T myjavascript.js localhost:4567/js</tt>
+* <tt>curl -T myjavascript.js localhost:4567/js > compressed-myjavascript.js</tt>
 
