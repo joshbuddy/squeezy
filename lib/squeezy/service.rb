@@ -7,6 +7,10 @@ class Squeezy
 
     squeezy = Squeezy.new
 
+    get('/') do
+      'ok'
+    end
+  
     put('/js') do
       squeezy.compress_js(request.env['rack.input'].read)
     end
