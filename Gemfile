@@ -1,3 +1,3 @@
 source :rubygems
-gem "sinatra"
-gem "glassfish"
+
+gemspec

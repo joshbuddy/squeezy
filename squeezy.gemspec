@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   
   s.add_dependency "glassfish"
   s.add_dependency "sinatra"
-  s.add_development_dependency "rspec"
+  s.add_development_dependency "rspec", '~> 1.3.0'
   s.add_development_dependency "rake"
   s.add_development_dependency "bundler", ">= 1.0.0"
 
