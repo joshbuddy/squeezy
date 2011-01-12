@@ -20,10 +20,6 @@ class Squeezy
       CssCompressor.new(java.io.StringReader.new(contents)).compress(result = java.io.StringWriter.new(), -1)
       result.to_s
     end
-  rescue Exception => e
-    $stderr.puts e
-    $stderr.puts "Compression of CSS failed!"
-    contents
   end
 
   def compress_js(contents)
@@ -31,9 +27,5 @@ class Squeezy
       JavaScriptCompressor.new(java.io.StringReader.new(contents), Reporter.new).compress(result = java.io.StringWriter.new(), -1, true, false, false, false)
       result.to_s
     end
-  rescue Exception => e
-    $stderr.puts e
-    $stderr.puts "Compression of JS failed!"
-    contents
   end
 end
