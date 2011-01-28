@@ -17,7 +17,7 @@ describe "A JS Compressor" do
     @squeezy.compress_js(js).count("\n").should == 0
   end
 
-  it "should return the original file when the js is malformed" do
+  it "should raise an error when original file when the js is malformed" do
     js_malformed = IO.read("spec/fixtures/js-malformed.js")
     proc{@squeezy.compress_js(js_malformed)}.should raise_error
   end

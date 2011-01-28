@@ -24,8 +24,13 @@ class Squeezy
 
   def compress_js(contents)
     with_cached_file "/tmp/#{Digest::MD5.hexdigest(contents)}.js" do
-      JavaScriptCompressor.new(java.io.StringReader.new(contents), Reporter.new).compress(result = java.io.StringWriter.new(), -1, true, false, false, false)
-      result.to_s
+      reporter = Reporter.new
+      begin
+        JavaScriptCompressor.new(java.io.StringReader.new(contents), reporter).compress(result = java.io.StringWriter.new(), -1, true, false, false, false)
+        result.to_s
+      rescue
+        raise "Compression error: #{reporter.to_s}"
+      end
     end
   end
 end

@@ -4,12 +4,17 @@ class Squeezy
     include_class Java::org.mozilla.javascript.EvaluatorException
     include_class Java::org.mozilla.javascript.ErrorReporter
 
+    def initialize
+      @errors = StringIO.new
+    end
+
+    def to_s
+      @errors.rewind
+      @errors.read
+    end
+
     def do_message(type, message, source_name, line, line_source, line_offset)
-      if (line < 0)
-        $stderr.puts("\n[#{type.to_s.upcase}] #{message} --> #{line_source}")
-      else
-        $stderr.puts("\n[#{type.to_s.upcase}] #{line} #{line_offset} : #{message} --> #{line_source}")
-      end
+      @errors.puts(line < 0 ? "\n[#{type.to_s.upcase}] #{message} --> #{line_source}" : "\n[#{type.to_s.upcase}] #{line} #{line_offset} : #{message} --> #{line_source}")
     end
 
     def warning(message, source_name, live, line_source, line_offset)
