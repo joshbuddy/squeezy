@@ -12,7 +12,11 @@ class Squeezy
     end
   
     put('/js') do
-      squeezy.compress_js(request.env['rack.input'].read)
+      begin
+        squeezy.compress_js(request.env['rack.input'].read)
+      rescue
+        halt 400, $!.message
+      end
     end
 
     put('/css') do
