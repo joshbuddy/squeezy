@@ -10,11 +10,13 @@ Gem::Specification.new do |s|
   s.email       = ["joshbuddy@gmail.com"]
   s.homepage    = "http://rubygems.org/gems/squeezy"
   s.summary     = %q{Asset compression service via YUI compressor}
-  s.description = %q{Asset compression service via YUI compressor}
+  s.description = %q{Asset compression service via YUI compressor.}
 
   s.rubyforge_project = "squeezy"
 
   s.add_dependency "sinatra"
+  s.add_dependency "trinidad"
+
   s.add_development_dependency "rspec", '~> 1.3.0'
   s.add_development_dependency "rake"
   s.add_development_dependency "bundler", ">= 1.0.0"
