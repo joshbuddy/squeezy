@@ -13,8 +13,7 @@ Gem::Specification.new do |s|
   s.description = %q{Asset compression service via YUI compressor}
 
   s.rubyforge_project = "squeezy"
-  
-  s.add_dependency "glassfish"
+
   s.add_dependency "sinatra"
   s.add_development_dependency "rspec", '~> 1.3.0'
   s.add_development_dependency "rake"
