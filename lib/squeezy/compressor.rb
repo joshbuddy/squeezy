@@ -2,8 +2,8 @@ require 'digest/md5'
 
 class Squeezy
 
-  include_class Java::com.yahoo.platform.yui.compressor.JavaScriptCompressor
-  include_class Java::com.yahoo.platform.yui.compressor.CssCompressor
+  java_import Java::com.yahoo.platform.yui.compressor.JavaScriptCompressor
+  java_import Java::com.yahoo.platform.yui.compressor.CssCompressor
 
   def with_cached_file(file)
     if File.exist?(file)

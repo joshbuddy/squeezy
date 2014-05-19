@@ -1,8 +1,8 @@
 class Squeezy
   class Reporter
 
-    include_class Java::org.mozilla.javascript.EvaluatorException
-    include_class Java::org.mozilla.javascript.ErrorReporter
+    java_import Java::org.mozilla.javascript.EvaluatorException
+    java_import Java::org.mozilla.javascript.ErrorReporter
 
     def initialize
       @errors = StringIO.new
