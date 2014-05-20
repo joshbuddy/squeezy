@@ -13,7 +13,8 @@ class Squeezy
 
     put('/js') do
       begin
-        squeezy.compress_js(request.env['rack.input'].read)
+        js = request.env['rack.input'].read.force_encoding('utf-8')
+        squeezy.compress_js(js)
       rescue => e
         halt 500, e.message
       end
@@ -21,7 +22,8 @@ class Squeezy
 
     put('/css') do
       begin
-        squeezy.compress_css(request.env['rack.input'].read)
+        css = request.env['rack.input'].read.force_encoding('utf-8')
+        squeezy.compress_css(css)
       rescue => e
         halt 500, e.message
       end

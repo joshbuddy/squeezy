@@ -6,15 +6,15 @@ describe "A JS Compressor" do
     `rm -rf /tmp/*.css`
     `rm -rf /tmp/*.js`
   end
-  
+
   it "should return less than it started with" do
     js = IO.read("spec/fixtures/js-multiline.js")
     js.size.should > @squeezy.compress_js(js).size
   end
 
-  it "should have no new lines" do
+  it "should have one newline" do
     js = IO.read("spec/fixtures/js-multiline.js")
-    @squeezy.compress_js(js).count("\n").should == 0
+    @squeezy.compress_js(js).count("\n").should == 1
   end
 
   it "should raise an error when original file when the js is malformed" do

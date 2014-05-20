@@ -26,7 +26,7 @@ class Squeezy
     with_cached_file "/tmp/#{Digest::MD5.hexdigest(contents)}.js" do
       reporter = Reporter.new
       begin
-        JavaScriptCompressor.new(java.io.StringReader.new(contents), reporter).compress(result = java.io.StringWriter.new(), -1, true, false, false, false)
+        JavaScriptCompressor.new(java.io.StringReader.new(contents), reporter).compress(result = java.io.StringWriter.new(), 0, true, false, false, false)
         result.to_s
       rescue
         raise "Compression error: #{reporter.to_s}"
