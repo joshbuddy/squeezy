@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.rubyforge_project = "squeezy"
 
   s.add_dependency "sinatra"
-  s.add_dependency "trinidad"
+  s.add_dependency "puma", "2.8.2"
 
   s.add_development_dependency "rspec", '~> 1.3.0'
   s.add_development_dependency "rake"
