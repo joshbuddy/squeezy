@@ -16,9 +16,10 @@ Gem::Specification.new do |s|
 
   s.add_dependency "sinatra"
   s.add_dependency "puma", "2.8.2"
+  s.add_dependency "uglifier", "2.5.3"
 
   s.add_development_dependency "rspec", '~> 1.3.0'
-  s.add_development_dependency "rake"
+  s.add_development_dependency "rake", '10.3.2'
   s.add_development_dependency "bundler", ">= 1.0.0"
 
   s.files         = `git ls-files`.split("\n")

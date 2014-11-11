@@ -9,7 +9,12 @@ describe "A JS Compressor" do
 
   it "should return less than it started with" do
     js = IO.read("spec/fixtures/js-multiline.js")
-    js.size.should > @squeezy.compress_js(js).size
+    @squeezy.compress_js(js).should == "function blah(b,a){return b==\"asd\\nasdasd\"\n};"
+  end
+
+  it "should return less than it started with when using uglify" do
+    js = IO.read("spec/fixtures/js-multiline.js")
+    @squeezy.compress_js(js, 'uglifyjs').should == "function blah(a,n){return\"asd\\nasdasd\"==a}"
   end
 
   it "should have one newline" do

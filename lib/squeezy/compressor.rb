@@ -1,3 +1,4 @@
+require 'uglifier'
 require 'digest/md5'
 
 class Squeezy
@@ -22,14 +23,21 @@ class Squeezy
     end
   end
 
-  def compress_js(contents)
+  def compress_js(contents, engine = 'yui')
     with_cached_file "/tmp/#{Digest::MD5.hexdigest(contents)}.js" do
       reporter = Reporter.new
       begin
-        JavaScriptCompressor.new(java.io.StringReader.new(contents), reporter).compress(result = java.io.StringWriter.new(), 0, true, false, false, false)
-        result.to_s
-      rescue
-        raise "Compression error: #{reporter.to_s}"
+        case engine
+        when 'yui'
+          JavaScriptCompressor.new(java.io.StringReader.new(contents), reporter).compress(result = java.io.StringWriter.new(), 0, true, false, false, false)
+          result.to_s
+        when 'uglifyjs'
+          Uglifier.new(compress: {keep_fargs: true}).compile(contents)
+        else
+          raise "unknown engine `#{engine}'"
+        end
+      rescue => e
+        raise "Compression error: #{e.message} #{reporter.to_s}"
       end
     end
   end

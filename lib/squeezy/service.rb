@@ -14,7 +14,7 @@ class Squeezy
     put('/js') do
       begin
         js = request.env['rack.input'].read.force_encoding('utf-8')
-        squeezy.compress_js(js)
+        squeezy.compress_js(js, params['engine'] || 'yui')
       rescue => e
         halt 500, e.message
       end
